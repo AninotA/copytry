@@ -24,7 +24,7 @@ search.addEventListener('click', e => {
   const trimmedValue = input.value.trim();
   if (trimmedValue !== '') {
     fetchMovies(trimmedValue, pageNumber).then(foundData => {
-      if (foundData.hits.length === 0) {
+      if (foundData.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no movies matching your search query. Please try again.'
         );
