@@ -11,6 +11,8 @@
   background: rgba(0, 0, 0, 0.2);
   opacity: 1;
   transition-property: opacity;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
   &.is-hidden {
     opacity: 0;
@@ -20,12 +22,12 @@
 
 .modal-window {
   position: relative;
-  top: 80%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 48px 20px 40px 20px;
   width: 280px;
-  background-color: #ffffff;
+  background-color: var(--cl-almost-white);
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -55,12 +57,20 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: color;
+  &:hover,
+  &:focus {
+    color: var(--cl-accent);
+  }
 }
 .modal__sidebar--left {
   display: block;
   border-radius: 5px;
   width: 240px;
   height: 357px;
+  // overflow: hidden;
   margin-bottom: 20px;
   @include mq('tab') {
     width: 264px;
@@ -72,6 +82,21 @@
     width: 375px;
     height: 478px;
     margin-right: 16px;
+  }
+}
+.modal__img {
+  width: 240px;
+  height: 357px;
+  border-radius: 5px;
+  @include mq('tab') {
+    width: 264px;
+    height: 374px;
+    border-radius: 5px;
+  }
+  @include mq('desk') {
+    width: 375px;
+    height: 478px;
+    border-radius: 5px;
   }
 }
 .modal__item {

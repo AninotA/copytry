@@ -1,16 +1,9 @@
-import newsApiService from './fetch';
-import axios from 'axios';
-import { addListenerBtnYouTube } from './trailer';
+// Import library
+import { addListenerBtnYouTube } from "./trailer";
+// import { changeGenre, genresInfo, genresInfoUk } from "./render-top-films";
 
-const ApiService = new newsApiService();
-ApiService.fetchPopularMovie().then(data => {
-  console.dir(data.results);
-  renderGalleryFilms(data.results);
-});
-
-const refs = {
-  card: document.querySelector('.film-list'),
-};
+// Link on HTML / DOM elements
+const imageGallaryRef = document.querySelector('.film-list');
 
 export function changeGenre (genresInfo, genre_ids) {
   const genrArrey = []
@@ -53,7 +46,7 @@ export function renderGalleryFilms(cards) {
       <h3 class="card__name lng-cardName">${original_title || title}</h3>
       <p class="card__info lng-cardInfo"> ${changeGenre(genresInfo, genre_ids)} | ${release_date.split('-')[0] || 'Coming soon'}<span class="card__rating"> ${vote_average} </span></p></div>
   </li>` }).join('')
-  refs.card.insertAdjacentHTML('beforeend', markup);
+  imageGallaryRef.insertAdjacentHTML('beforeend', markup);
   addListenerBtnYouTube();
 }
 

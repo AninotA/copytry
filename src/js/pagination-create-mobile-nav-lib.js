@@ -1,9 +1,9 @@
 import { selectConditionOfButton } from "./pagination-number-button-create";
 
-const paginationRef = document.querySelector('.js-pagination');
+const paginationRef = document.querySelector('.js-pagination-library');
 
 // Func. for create Pagination
-export default function createTypicalPaginationNavigation(data) {
+export default function createMobilePaginationNavigation(data) {
   const { page, totalPages } = data;
 
   let paginationHtml = '';
@@ -22,13 +22,13 @@ export default function createTypicalPaginationNavigation(data) {
     if (page === 1) {
       paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--block" name="pre-page" disabled><i class="fa-solid fa-arrow-left"></i></button>`;
     } else {
-      paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>`;
+      paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--active" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>`;
     }
 
     if (page === totalPages) {
       paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--block" name="next-page" disabled><i class="fas fa-arrow-right"></i></button>`;
     } else {
-      paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
+      paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--active" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
     }
 
     paginationHtml =
@@ -39,14 +39,12 @@ export default function createTypicalPaginationNavigation(data) {
 
     if (page - 3 > 0) {
       paginationElementsLeft = `
-<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>
-<button type="button" class="js-pagination__btn js-pagination__btn--active" name="first-page">1</button>
-<span class="js-pagination__span">&#183&#183&#183</span>`;
+<button type="button" class="js-pagination__btn js-pagination__btn--active" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>`;
     } else {
       if (page === 1) {
         paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--block" name="pre-page" disabled><i class="fa-solid fa-arrow-left"></i></button>`;
       } else {
-        paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>`;
+        paginationElementsLeft = `<button type="button" class="js-pagination__btn js-pagination__btn--active" name="pre-page"><i class="fa-solid fa-arrow-left"></i></button>`;
       }
 
       flag -= 1;
@@ -54,14 +52,12 @@ export default function createTypicalPaginationNavigation(data) {
 
     if (totalPages - page > 2) {
       paginationElementsRight = `
-<span class="js-pagination__span">&#183&#183&#183</span>
-<button type="button" class="js-pagination__btn js-pagination__btn--active" name="last-page">${totalPages}</button>
-<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
+<button type="button" class="js-pagination__btn js-pagination__btn--active" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
     } else {
       if (page === totalPages) {
         paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--block" name="next-page" disabled><i class="fas fa-arrow-right"></i></button>`;
       } else {
-        paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--active js-grey" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
+        paginationElementsRight = `<button type="button" class="js-pagination__btn js-pagination__btn--active" name="next-page"><i class="fas fa-arrow-right"></i></button>`;
       }
       flag += 1;
     }

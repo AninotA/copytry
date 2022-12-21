@@ -1,6 +1,6 @@
 import { selectConditionOfButton } from "./pagination-number-button-create";
 
-const paginationRef = document.querySelector('.js-pagination');
+const paginationRef = document.querySelector('.js-pagination-library');
 
 // Func. for create Pagination
 export default function createTypicalPaginationNavigation(data) {

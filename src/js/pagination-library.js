@@ -1,29 +1,34 @@
 // Load inner sources
 import createTypicalPaginationNavigation from './pagination-create-typical-nav';
 import createMobilePaginationNavigation from './pagination-create-mobile-nav';
-import { renderGalleryFilms } from './render-gallery-films';
-import axios from 'axios';
+import { load } from './local_storage';
+import { handleClick } from './gallery';
 
 // Link on HTML / DOM elements
-const paginationRef = document.querySelector('.js-pagination');
-const imageGallaryRef = document.querySelector('.film-list');
+const paginationRef = document.querySelector('.js-pagination-library');
+const imageGallaryRef = document.querySelector('.js-gallery-library');
 
 // Support pagination data
 let paginationData = {
   page: 0,
   totalPages: 0,
 };
-let paginationURL = '';
+let objArrayData = [];
 
-export function detectedURLForPagination(url) {
-  paginationURL = url;
-}
-
-export function obtainFetchDataForPagination(data) {
-  let paginationPAGE = data.page;
-  let paginationTOTALPAGES = data.total_results;
-
-  changeViewportAndData(paginationPAGE, paginationTOTALPAGES);
+export function onLoadLocalStrQuery(key) { 
+  objArrayData = [];
+  const queue = load(`${key}`);
+  const numQueue = queue.length;
+  const allPages = Math.ceil(numQueue / 20);
+  paginationData.page = 1;
+  paginationData.totalPages = allPages;
+  for (let idx = 0; idx < allPages; idx++) {
+    let portion = queue.slice((20 * idx), (20 * (idx + 1)));
+    console.log(portion)
+    objArrayData.push(portion);
+    changeViewportAndData(paginationData.page, paginationData.totalPages);
+    handleClick(objArrayData[0])
+  }
 }
 
 // Here starting panel pagination
@@ -33,11 +38,6 @@ function changeViewportAndData(p, tP) {
   let newData;
   if (!tP) {
     return;
-  } else if (tP > 500) {
-    newData = {
-      page: p,
-      totalPages: 500,
-    };
   } else {
     newData = {
       page: p,
@@ -79,37 +79,20 @@ function onPaginationNavigationClick(evt) {
     ) {
       paginationData.page = textContent;
       imageGallaryRef.innerHTML = '';
-      paginationFetch(paginationURL, paginationData.page).then(data => {
-        changeViewportAndData(data.page, data.total_results);
-        renderGalleryFilms(data.results);
-      });
+      changeViewportAndData(paginationData.page, paginationData.totalPages);
+      handleClick(objArrayData[textContent-1])
     } else if (name === 'pre-page') {
       paginationData.page -= 1;
-      imageGallaryRef.innerHTML = '';
-      paginationFetch(paginationURL, paginationData.page).then(data => {
-        changeViewportAndData(data.page, data.total_results);
-        renderGalleryFilms(data.results);
-      });
+      imageGallaryRef.innerHTML = '';     
+      changeViewportAndData(paginationData.page, paginationData.totalPages);
+      handleClick(objArrayData[paginationData.page - 1]);
+      
     } else if (name === 'next-page') {
       paginationData.page += 1;
       imageGallaryRef.innerHTML = '';
-      paginationFetch(paginationURL, paginationData.page).then(data => {
-        changeViewportAndData(data.page, data.total_results);
-        renderGalleryFilms(data.results);
-      });
+      changeViewportAndData(paginationData.page, paginationData.totalPages);
+      handleClick(objArrayData[paginationData.page - 1]);
     }
   }
 }
 
-// Fetch function for pagination
-async function paginationFetch(urlFetch, num) {
-  try {
-    let firstIndex = urlFetch.indexOf('page=') + 5;
-    let clipStr = urlFetch.slice(0, firstIndex);
-    const url = `${clipStr + num}`;
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
